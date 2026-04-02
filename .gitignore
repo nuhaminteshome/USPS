@@ -1,2 +1,3 @@
-extracted_data/
-logging_config/logs/
+data_injestion/extracted_data/
+data_injestion/logging_config/logs/
+.venv/
