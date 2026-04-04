@@ -1,3 +1,4 @@
 data_injestion/extracted_data/
 data_injestion/logging_config/logs/
 .venv/
+data_injestion/parquet_data
