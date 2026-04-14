@@ -10,7 +10,6 @@ import random
 import time
 
 DOWNLOAD_FOLDER = "extracted_data"
-PARQUET_FOLDER = "parquet_data"
 CHECKPOINT_FILE = "completed.txt"
 
 logger = get_logger()
@@ -31,6 +30,7 @@ def get_files() -> list[dict]:
 
     return response.json()
 
+
 def validate_file_size(file_path: str, expected_size: int) -> bool:
     actual_size = os.path.getsize(file_path)
     if actual_size != expected_size:
@@ -46,33 +46,42 @@ file_name: a "extractn.gz" file, where n is represented by a number correspondin
 Returns:
 None
 '''
-
 def download_file(file_name: str, expected_size: int, retries: int = 5) -> str | None:
-
     base_url = "https://spm.usps.com/api/extract/download/"
     os.makedirs(DOWNLOAD_FOLDER, exist_ok=True)
     file_path = os.path.join(DOWNLOAD_FOLDER, file_name)
 
     if os.path.exists(file_path):
         logger.info(f"File exists, validating: {file_name}")
-        if validate_file_size(file_path, expected_size):
+        actual_size = os.path.getsize(file_path)
+        if actual_size == expected_size:
             return file_path
         else:
-            logger.warning(f"Existing file invalid, deleting and redownloading: {file_name}")
+            logger.warning(
+                f"Existing file invalid, deleting: {file_name} "
+                f"(expected {expected_size}, got {actual_size})"
+            )
             os.remove(file_path)
 
-    delay = 1  
+    delay = 1
+
     for attempt in range(1, retries + 1):
         try:
             with requests.get(base_url + file_name, stream=True, timeout=30) as r:
                 r.raise_for_status()
+
+      
                 with open(file_path, "wb") as f:
                     for chunk in r.iter_content(chunk_size=65536):
                         if chunk:
                             f.write(chunk)
 
-            if not validate_file_size(file_path, expected_size):
-                logger.error(f"Size validation failed after download: {file_name}")
+            actual_size = os.path.getsize(file_path)
+            if actual_size != expected_size:
+                logger.error(
+                    f"Size validation failed: {file_name} "
+                    f"(expected {expected_size}, got {actual_size})"
+                )
                 os.remove(file_path)
                 raise Exception("File size mismatch")
 
@@ -91,10 +100,10 @@ def download_file(file_name: str, expected_size: int, retries: int = 5) -> str |
                 return None
 
 def convert_gz_to_parquet(file_path: str) -> str | None:
-    os.makedirs(PARQUET_FOLDER, exist_ok=True)
+    os.makedirs(DOWNLOAD_FOLDER, exist_ok=True)
 
     output_file = os.path.basename(file_path).replace(".gz", ".parquet")
-    output_path = os.path.join(PARQUET_FOLDER, output_file)
+    output_path = os.path.join(DOWNLOAD_FOLDER, output_file)
 
     try:
         with gzip.open(file_path, "rt") as f:

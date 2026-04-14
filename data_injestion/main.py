@@ -1,37 +1,41 @@
 from injest import download_file, convert_gz_to_parquet, get_files, load_completed, save_completed
+from azure_connection.azure_setup import upload_file_to_blob
 
-import time
-
-import polars as p
-
+from concurrent.futures import ThreadPoolExecutor
 from logging_config.config import get_logger
 
-json_data = get_files()
-
-completed = load_completed()
-
-logger = get_logger()
 
 def main():
-    for file_info in json_data:
-        file_name = file_info["path"]
-        file_size = file_info["size"]
+    logger = get_logger()
+    completed = load_completed()
+    json_data = get_files()
 
-        if file_name in completed:
-            logger.info(f"Skipping completed: {file_name}")
-            continue
+    files_to_process = [
+        (f["path"], f["size"])
+        for f in json_data
+        if f["path"] not in completed
+    ]
 
+    def process_file(args):
+        file_name, file_size = args
         downloaded_file = download_file(file_name, file_size)
+        if not downloaded_file:
+            return file_name  
+        parquet_file = convert_gz_to_parquet(downloaded_file)
+        if not parquet_file:
+            return file_name  
 
-        if downloaded_file:
-            parquet_file = convert_gz_to_parquet(downloaded_file)
+        success = upload_file_to_blob(parquet_file)
+        if success:
+            save_completed(file_name)
 
-            if parquet_file:
-                save_completed(file_name)
+        return file_name
+
+ 
+    with ThreadPoolExecutor(max_workers=3) as executor:
+        list(executor.map(process_file, files_to_process))
 
 
 if __name__ == "__main__":
-    main()
-
-
-
+    for i in range(5):
+        main()
