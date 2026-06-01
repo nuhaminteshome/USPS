@@ -2,7 +2,7 @@
 
 **Challenge X Final Project** | 👥 Team: Nuhamin Teshome, Amanda Wei, Kalkidan Tefera, Mariamawit Berta
 
-An end-to-end data pipeline and analysis platform for investigating USPS delivery performance disparities between rural and urban America, built on ~4 billion delivery records.
+An end-to-end data pipeline and analysis platform for investigating USPS delivery performance disparities between rural and urban America, built on ~2.5 billion delivery records.
 
 ---
 
