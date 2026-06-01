@@ -114,15 +114,3 @@ Findings are visualized in the **Power BI dashboard** (`USPS_Service_Performance
 
 ---
 
-## 👥 Team
-
-| Name | Role |
-|---|---|
-| Nuhamin Teshome | 🔧 Data Engineering / Pipeline |
-| Amanda Wei | 📊 Analysis / Visualization |
-| Kalkidan Tefera | 🔍 Analysis / Classification |
-| Mariamawit Berta | 🎨 Visualization / Presentation |
-
----
-
-*🏆 Submitted for USPS Challenge X — Final Presentation*
