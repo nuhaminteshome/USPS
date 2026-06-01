@@ -69,7 +69,7 @@ The ingestion pipeline downloads ~30,000 compressed files from the USPS Service 
 
 ## 🔬 Analysis (`USPSAnalysisFinalNotebook.ipynb`)
 
-Runs on **Azure Synapse Analytics** with PySpark against ~4 billion records stored in Azure Data Lake.
+Runs on **Azure Synapse Analytics** with PySpark against ~2.5 billion records stored in Azure Data Lake.
 
 **Pipeline:**
 1. Load raw USPS Parquet data from Azure Data Lake
