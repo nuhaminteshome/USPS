@@ -110,17 +110,17 @@ All data lives in a private Azure environment — the raw USPS `.gz` files, conv
 Findings are visualized in the **Power BI dashboard** (`USPS_Service_Performance_Dashboard.pbix`).
 
 ### 📅 Annual Overview — Rural vs. Urban Delivery Performance
-![Annual Overview](annual.png)
+![Annual Overview](screenshots/annual.png)
 
 Rural areas actually outperformed urban areas on on-time delivery (81.56% vs. 79.81%), though rural mail takes slightly longer on average (3.27 days vs. 3.35 days). Rural-to-rural routes had the best performance at 83.88%, while urban-to-urban was the worst at 79.76%. Urban areas account for the vast majority of mail volume (87.57%).
 
 ### 📦 Mail Product Performance — Rural vs. Urban
-![Mail Product Performance](mail_product.png)
+![Mail Product Performance](screenshots/district.png)
 
 Marketing mail dominated the top performers in both rural and urban areas, scoring above 94%. The worst performers in both categories were Periodicals — scoring around 50% — suggesting a systemic issue with that mail class regardless of geography.
 
 ### 🗺️ District Analysis
-![District Analysis](district.png)
+![District Analysis](screenshots/mail product.png)
 
 WESTPAC was the top-performing delivery region (88.75%), while CENTRAL was the lowest (79.76%). At the district level, California 6, Hawaii, and Alaska led performance (90%+), while Ohio 2, Illinois 2, and Virginia were the lowest performers (~76–78%).
 
