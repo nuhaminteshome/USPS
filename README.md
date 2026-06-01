@@ -120,7 +120,7 @@ Rural areas actually outperformed urban areas on on-time delivery (81.56% vs. 79
 Marketing mail dominated the top performers in both rural and urban areas, scoring above 94%. The worst performers in both categories were Periodicals — scoring around 50% — suggesting a systemic issue with that mail class regardless of geography.
 
 ### 🗺️ District Analysis
-![District Analysis](screenshots/mail product.png)
+![District Analysis](screenshots/mail_product.png)
 
 WESTPAC was the top-performing delivery region (88.75%), while CENTRAL was the lowest (79.76%). At the district level, California 6, Hawaii, and Alaska led performance (90%+), while Ohio 2, Illinois 2, and Virginia were the lowest performers (~76–78%).
 
